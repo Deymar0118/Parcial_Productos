@@ -1,3 +1,9 @@
+// Código completo
+
+// Integrantes:
+// Deymar Andrés Ampudia Rivas
+// Rodigro Arturo Pérez Angulo
+
 // Código Base hecho por el Ing. Deymar Ampudia.
 // Primera revisión realizada por el Lic. Pérez, primeros problemas esclarecidos
 
@@ -51,7 +57,7 @@ struct RegistroProducto
     int Cantidad = 0;
     float ValorUnitario = 0;
 
-    int acumulador;
+    int acumulador = 0;
 
     int PrecioTotal;
     int Promediar;
@@ -128,7 +134,6 @@ int mostrar() // Funciona correctamente.
         cout << "cantidad: " << aux->Cantidad << endl;
         cout << "" << endl;
 
-        free(aux);
     }
     return 0;
 }
