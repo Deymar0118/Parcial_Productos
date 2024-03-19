@@ -145,7 +145,7 @@ int registro() // Por este lado no hay problema.
 
 int mostrar() // Funciona correctamente.
 {
-     if (cab == nullptr)
+     if (cab == NULL)
     {
         cout << "Lo siento, pero el inventario esta vacio. Registre un nuevo producto." << endl;
         return 0;
@@ -165,7 +165,7 @@ int mostrar() // Funciona correctamente.
 
 int buscar() // Metodo corregido y funcionando correctamente, era necesario tan solo, cambiar de lugar el cout y ponerlo fuera del for
 {
-   if (cab == nullptr)
+   if (cab == NULL)
     {
         cout << "No hay productos para buscar porque el inventario esta vacio." << endl;
         return 0;
