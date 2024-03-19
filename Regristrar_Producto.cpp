@@ -1,10 +1,4 @@
-// Código completo
-
-// Integrantes:
-// Deymar Andrés Ampudia Rivas
-// Rodigro Arturo Pérez Angulo
-
-// Código Base hecho por el Ing. Deymar Ampudia.
+// Código Base hecho por el Ing. Deymar Ampudia. REALIZAR SU DEBIDO ACREDITAMIENTO
 // Primera revisión realizada por el Lic. Pérez, primeros problemas esclarecidos
 
 // Notas adicionales del Ing. al Lic.
@@ -16,6 +10,8 @@
 // Notas del Lic.
 // despues de resolver estos inconvenientes, hay que desarrollar la segunda parte del código que son las ventas de productos, no continue con esas cuestiones debido al tiempo
 // Eso, y que el PC no es propiamente mío. Gracias.
+
+// Recuerden Acreditar al Ing.
 
 // Actualizacion del codigo.
 // se añadió la opcion "vender producto". esto se hace mediante la implementacion del ID del producto para la busqueda del mismo.
@@ -36,54 +32,57 @@
 // Acualizacion del código
 // Nota adicional del Ing. Ampudia para el Lic. Perez:
 // Se soluciono el problema del metodo "Calcular promedio de precios"
-// Los problemas con el metodo "buscar producto" todavia persisten. (solucionar en lo mas pronto posible).
+// Los problemas con el metodo "buscar producto" todavia persisten. (solucionar en lo mas pronto posiblse).
 
-// Notas del Lic. Pérez al Ing. Ampudia:
-// Se soluciono el problema con el método buscar, era necesario colocarlo por fuera del for, ya que al estar adentro del for, mostraría si o si el mensaje
+//Notas del Lic. Pérez al Ing. Ampudia:
+//Se soluciono el problema con el método buscar, era necesario colocarlo por fuera del for, ya que al estar adentro del for, mostraría si o si el mensaje 
 //"El Producto correspondiente al ID ingresado no se encuentra registrado en el inventario". El problema era que mostraba ese mensaje a pesar que, el prodcuto estuviera registrado
-// Finalmente, y depues de tanta lucha, la funcion eliminar esta funcionando bien, tecnicamente, la unica cosa es que no lograba organizarlo de manera que aun asi mostrase los
-// datos del ID del producto ingresado. Se reorganizo la funcion "switch" para que no existiera inconvenientes en su uso.
-// Falta solamente solucionar los problemas de cierre de programa, luego los revisaré poco a poco aver donde están y creo que también hay que revisar la opción "vender producto"
+//Finalmente, y depues de tanta lucha, la funcion eliminar esta funcionando bien, tecnicamente, la unica cosa es que no lograba organizarlo de manera que aun asi mostrase los
+//datos del ID del producto ingresado. Se reorganizo la funcion "switch" para que no existiera inconvenientes en su uso.
+//Falta solamente solucionar los problemas de cierre de programa, luego los revisaré poco a poco aver donde están. 
+
+// Nuevas notas del Lic. Pérez al Ing. Ampudia:
+// Ahora, el código emitirá un mensaje en caso de que se registre un producto con un ID ya utilizado, en caso de que el ID no sea duplicado, le dajará al usuario 
+//continuar con la ejecución del programa. En caso contrario, le dirá que el ID está en uso y que lo intente nuevamente
 
 #include <iostream>
 #include <malloc.h>
 
 using namespace std;
 
-struct RegistroProducto // Estructura para almacennar y organizar datos.
+struct RegistroProducto
 {
     int ID = 0;
     char Nombre[30];
     int Cantidad = 0;
     float ValorUnitario = 0;
 
-    int acumulador = 0;
+    int acumulador;
+
+    int PrecioTotal;
+    int Promediar;
 
     RegistroProducto *sig;
 };
 
 RegistroProducto *cab, *aux, *aux2;
 
-int registro() // se usa para registrar un nuevo nodo
-
-// se crea un nuevo elemento (posicion de memoria)
-// el ultimo elemento creado apunta a dicho elemento
-// el nuevo elemento apunta a NULL
+int registro() // Por este lado no hay problema.
 {
     if (cab == NULL)
     {
-        cab = (struct RegistroProducto *)malloc(sizeof(struct RegistroProducto)); // Cab pide a memoria a un nuevo elemento del tamaño de la estructura
+        cab = (struct RegistroProducto *)malloc(sizeof(struct RegistroProducto));
 
-        cout << "Ingrese el nombre del producto: ";
+        cout << "ingrese el nombre del producto: ";
         cin >> cab->Nombre;
 
-        cout << "Ingrese el ID del producto: ";
+        cout << "ingrese el ID del producto: ";
         cin >> cab->ID;
 
-        cout << "Ingrese el valor unitario del producto: $";
+        cout << "ingrese el valor unitario del producto: $";
         cin >> cab->ValorUnitario;
 
-        cout << "Ingrese la cantidad a registrar del producto: ";
+        cout << "ingrese la cantidad a registrar del producto: ";
         cin >> cab->Cantidad;
 
         cab->sig = NULL;
@@ -92,34 +91,49 @@ int registro() // se usa para registrar un nuevo nodo
     else
     {
         aux = (struct RegistroProducto *)malloc(sizeof(struct RegistroProducto));
+    cout << "Ingrese el ID del producto: ";
+    cin >> aux->ID;
 
-        cout << "Ingrese el nombre del producto: ";
-        cin >> aux->Nombre;
+    // A partir de aquí se usan los datos Boolean
+    bool idExists = false;
+    aux2 = cab;
+    while (aux2 != NULL) {
+      if (aux2->ID == aux->ID) {
+        idExists = true;
+        break;
+      }
+      aux2 = aux2->sig;
+    }
+    if (idExists) {
+      cout << "El ID ingresado ya esta en uso. Por favor, intente nuevamente."
+           << endl;
+      free(aux);
+    } else {
 
-        cout << "Ingrese el ID del producto: ";
-        cin >> aux->ID;
+      cout << "Ingrese el nombre del producto: ";
+      cin >> aux->Nombre;
 
-        cout << "Ingrese el valor unitario del producto: $";
-        cin >> aux->ValorUnitario;
+      cout << "Ingrese el valor unitario del producto: $";
+      cin >> aux->ValorUnitario;
 
-        cout << "Ingrese la cantidad a registrar del producto: ";
-        cin >> aux->Cantidad;
+      cout << "Ingrese la cantidad a registrar del producto: ";
+      cin >> aux->Cantidad;
 
-        aux->sig = NULL;
-        aux2 = cab;
+      aux->sig = NULL;
 
-        while (aux2->sig != NULL) // esto es para que pase de elemento en elemento phasta que llegue al ultimo
-        {
-            aux2 = aux2->sig;
-        }
-        aux->acumulador = aux2->acumulador + 1;
+      aux2 = cab;
+      while (aux2->sig != NULL) {
+        aux2 = aux2->sig;
+      }
 
-        aux2->sig = aux;
-        aux = NULL;
-        aux2 = aux;
+      aux->acumulador = aux2->acumulador + 1;
+      aux2->sig = aux;
+      aux = NULL;
+      aux2 = NULL;
 
         free(aux);
         free(aux2);
+        }
     }
     return 0;
 }
@@ -129,28 +143,28 @@ int mostrar() // Funciona correctamente.
     for (aux = cab; aux != NULL; aux = aux->sig)
     {
         cout << "Producto #" << aux->acumulador + 1 << endl;
-        cout << "Nombre del producto: " << aux->Nombre << endl;
+        cout << "Nombre del producto : " << aux->Nombre << endl;
         cout << "ID: " << aux->ID << endl;
-        cout << "Valor unitario: $" << aux->ValorUnitario << endl;
-        cout << "Cantidad: " << aux->Cantidad << endl;
+        cout << "valor unitario: $" << aux->ValorUnitario << endl;
+        cout << "cantidad: " << aux->Cantidad << endl;
         cout << "" << endl;
     }
     return 0;
 }
-
-int buscar() // Metodo corregido y funcionando correctamente, era necesario tan solo, cambiar de lugar el cout y ponerlo fuera del for
+            
+int buscar() //Metodo corregido y funcionando correctamente, era necesario tan solo, cambiar de lugar el cout y ponerlo fuera del for
 {
     int buscador = 0;
-    cout << "Ingrese el ID del producto a buscar: ";
+    cout << "ingrese el ID del producto a buscar: ";
     cin >> buscador;
 
     for (aux = cab; aux != NULL; aux = aux->sig)
     {
         if (buscador == aux->ID)
         {
-            cout << "Producto registrado" << endl;
+            cout << "producto registrado" << endl;
             cout << "Producto #" << aux->acumulador + 1 << endl;
-            cout << "Nombre del producto: " << aux->Nombre << endl;
+            cout << "Nombre del producto : " << aux->Nombre << endl;
             cout << "ID: " << aux->ID << endl;
             cout << "Valor Unitario: $" << aux->ValorUnitario << endl;
             cout << "Cantidad: " << aux->Cantidad << endl;
@@ -162,36 +176,28 @@ int buscar() // Metodo corregido y funcionando correctamente, era necesario tan 
     return 0;
 }
 
-int eliminar()
-{ // Finalmente, Este metodo esta tecnicamente finalizado, la logica es facil, pero la codificacion... no tanto.
-    int elemento = 0;
-    cout << "Ingrese el ID del producto que desea eliminar del inventario: ";
-    cin >> elemento;
-    aux = cab;
-    RegistroProducto *prev = NULL;
-    while (aux != NULL && aux->ID != elemento)
-    {
-        prev = aux;
-        aux = aux->sig;
+int eliminar() {  //Finalmente, Este metodo esta tecnicamente finalizado, la logica es facil, codificarlo fue un verdadero infierno
+  int elemento = 0;
+  cout << "Ingrese el ID del producto que desea eliminar del inventario: ";
+  cin >> elemento;
+  aux = cab;
+  RegistroProducto *prev = NULL;
+  while (aux != NULL && aux->ID != elemento) {
+    prev = aux;
+    aux = aux->sig;
+  }
+  if (aux != NULL) {
+    if (prev == NULL) {
+      cab = aux->sig;
+    } else {
+      prev->sig = aux->sig;
     }
-    if (aux != NULL)
-    {
-        if (prev == NULL)
-        {
-            cab = aux->sig;
-        }
-        else
-        {
-            prev->sig = aux->sig;
-        }
-        free(aux);
-        cout << "Producto eliminado exitosamente." << endl;
-    }
-    else
-    {
-        cout << "No existe un producto con el ID ingresado." << endl;
-    }
-    return 0;
+    free(aux);
+    cout << "Producto eliminado exitosamente." << endl;
+  } else {
+    cout << "No existe un producto con el ID ingresado." << endl;
+  }
+  return 0;
 }
 
 int PrecioTotal() // Funciona correctamente
@@ -204,7 +210,7 @@ int PrecioTotal() // Funciona correctamente
         total = total + cantTotal;
     }
 
-    cout << "El valor total de todos los productos es de: $" << total << endl;
+    cout << "el valor total de todos los productos es de: $" << total << endl;
     return 0;
 }
 
@@ -225,87 +231,83 @@ int Promediar() // Metodo solucionado
     }
     promediar = total3 / total2;
 
-    cout << "Existe una cantidad total de " << total2 << " de productos registrados" << endl;
+    cout << "existe una cantidad total de " << total2 << " de productos registrados" << endl;
 
-    cout << "El promedio del precio de todos los productos es de: " << promediar << endl;
+    cout << "el promedio del precio de todos los productos es de: " << promediar << endl;
     return 0;
 }
 
-int vender() // metodo arreglado. el problema era colocar el mensaje (producto no registerado) dentro del for
+int vender() // metodo completo
 {
     int IDVender = 0;
     int cantVender = 0;
-    cout << "Ingrese el ID del producto a vender: ";
+    cout << "ingrese el ID del producto a vender: ";
     cin >> IDVender;
 
     for (aux = cab; aux != NULL; aux = aux->sig)
     {
         if (IDVender == aux->ID)
         {
-            cout << "Producto existente en el inventario" << endl;
+            cout << "producto existente en el inventario" << endl;
             cout << "Producto #" << aux->acumulador + 1 << endl;
-            cout << "Nombre del producto: " << aux->Nombre << endl;
+            cout << "Nombre del producto : " << aux->Nombre << endl;
             cout << "ID: " << aux->ID << endl;
-            cout << "Valor unitario: $" << aux->ValorUnitario << endl;
-            cout << "Cantidad: " << aux->Cantidad << endl;
+            cout << "valor unitario: $" << aux->ValorUnitario << endl;
+            cout << "cantidad: " << aux->Cantidad << endl;
             cout << "" << endl;
 
-            cout << "Ingrese la cantidad de unidades del producto: ";
+            cout << "ingrese la cantidad de unidades del producto: ";
             cin >> cantVender;
 
             if (cantVender > aux->Cantidad)
             {
-                cout << "ATENCION. La cantidad de unidades a vender es mayor a la cantidad de unidades disponibles." << endl;
-                cout << "Cancelando la venta." << endl;
+                cout << "ATENCION. la cantidad de unidades a vender es mayor a la cantidad de unidades disponibles" << endl;
+                cout << "cancelando la venta" << endl;
             }
             if (cantVender <= aux->Cantidad)
             {
                 aux->Cantidad = aux->Cantidad - cantVender;
 
-                cout << "Venta realizada con exito. mostrando resultados: " << endl;
+                cout << "venta relaizada con exito. mostrando resultados: " << endl;
 
-                cout << "Producto existente en el inventario" << endl;
+                cout << "producto existente en el inventario" << endl;
                 cout << "Producto #" << aux->acumulador + 1 << endl;
-                cout << "Nombre del producto: " << aux->Nombre << endl;
+                cout << "Nombre del producto : " << aux->Nombre << endl;
                 cout << "ID: " << aux->ID << endl;
-                cout << "Valor unitario: $" << aux->ValorUnitario << endl;
-                cout << "Cantidad: " << aux->Cantidad << endl;
+                cout << "valor unitario: $" << aux->ValorUnitario << endl;
+                cout << "cantidad: " << aux->Cantidad << endl;
                 cout << "" << endl;
 
                 int ganancias = 0;
 
                 ganancias = cantVender * aux->ValorUnitario;
 
-                cout << "Usted ha obtenido una ganancia de $" << ganancias << endl;
+                cout << "usted ha obtenido una ganancia de $" << ganancias << endl;
             }
         }
-        if (IDVender != aux->ID)
-        {
-            cout << "Producto no registrado." << endl;
-        }
     }
-
+    cout << "producto no registrado." << endl;
     return 0;
 }
 
-int main() // menu de accion
+int main()
 {
     int opcion = 0;
     do
     {
         cout << "" << endl;
-        cout << "Bienvenido al servicio de gestion de inventario de productos." << endl;
+        cout << "Bienvenido al servicio de gestion de inventario de productos" << endl;
         cout << "Elija una de la siguientes opciones:" << endl;
         cout << "" << endl;
 
         cout << "1. Registrar un producto" << endl;
         cout << "2. Ver Lista de productos" << endl;
-        cout << "3. Buscar producto" << endl;
+        cout << "3. buscar producto" << endl;
         cout << "4. Eliminar producto" << endl;
-        cout << "5. Calcular valor total de productos" << endl;
-        cout << "6. Calcular el promedio de los precios de los productos" << endl;
-        cout << "7. Vender producto" << endl;
-        cout << "8. Salir" << endl;
+        cout << "5. calcular valor total de productos" << endl;
+        cout << "6. calcular el promedio de los precios de los productos" << endl;
+        cout << "7. vender producto (incompleto)" << endl;
+        cout << "8. salir" << endl;
         cout << "Ingrese su opcion: ";
         cin >> opcion;
         cout << "" << endl;
@@ -324,7 +326,7 @@ int main() // menu de accion
             buscar();
             break;
 
-        case 4:
+        case 4: 
             eliminar();
             break;
 
@@ -341,13 +343,13 @@ int main() // menu de accion
             break;
 
         case 8:
-            cout << "Programa finalizado. Que tenga buen dia." << endl;
+            cout << "Programa finalizado. Que tenga buen dia" << endl;
             break;
 
         default:
-            cout << "Opcion invalida. Intente nuevamente." << endl;
+            cout << "opcion invalida. intente nuevamente" << endl;
             break;
         }
-    } while (opcion != 8);
+    } while (opcion != 9);
     return 0;
 }
