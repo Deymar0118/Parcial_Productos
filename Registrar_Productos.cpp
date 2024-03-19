@@ -145,6 +145,12 @@ int registro() // Por este lado no hay problema.
 
 int mostrar() // Funciona correctamente.
 {
+     if (cab == nullptr)
+    {
+        cout << "Lo siento, pero el inventario esta vacio. Registre un nuevo producto." << endl;
+        return 0;
+    }
+    
     for (aux = cab; aux != NULL; aux = aux->sig)
     {
         cout << "Producto #" << aux->acumulador + 1 << endl;
@@ -159,6 +165,11 @@ int mostrar() // Funciona correctamente.
 
 int buscar() // Metodo corregido y funcionando correctamente, era necesario tan solo, cambiar de lugar el cout y ponerlo fuera del for
 {
+   if (cab == nullptr)
+    {
+        cout << "No hay productos para buscar porque el inventario esta vacio." << endl;
+        return 0;
+    }
     int buscador = 0;
     cout << "Ingrese el ID del producto a buscar: ";
     cin >> buscador;
@@ -166,7 +177,7 @@ int buscar() // Metodo corregido y funcionando correctamente, era necesario tan 
     for (aux = cab; aux != NULL; aux = aux->sig)
     {
         if (buscador == aux->ID)
-        {
+       {
             cout << "Producto registrado" << endl;
             cout << "Producto #" << aux->acumulador + 1 << endl;
             cout << "Nombre del producto : " << aux->Nombre << endl;
