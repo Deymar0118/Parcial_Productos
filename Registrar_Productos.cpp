@@ -34,6 +34,8 @@
 // Se soluciono el problema del metodo "Calcular promedio de precios"
 // Los problemas con el metodo "buscar producto" todavia persisten. (solucionar en lo mas pronto posiblse).
 
+
+
 // Notas del Lic. Pérez al Ing. Ampudia:
 // Se soluciono el problema con el método buscar, era necesario colocarlo por fuera del for, ya que al estar adentro del for, mostraría si o si el mensaje
 //"El Producto correspondiente al ID ingresado no se encuentra registrado en el inventario". El problema era que mostraba ese mensaje a pesar que, el prodcuto estuviera registrado
@@ -92,18 +94,18 @@ int registro() // Por este lado no hay problema.
         cin >> aux->ID;
 
         // A partir de aquí se usan los datos Boolean
-        bool idExists = false;
+        bool IDExiste = false;
         aux2 = cab;
         while (aux2 != NULL)
         {
             if (aux2->ID == aux->ID)
             {
-                idExists = true;
+                IDExiste = true;
                 break;
             }
             aux2 = aux2->sig;
         }
-        if (idExists)
+        if (IDExiste)
         {
             cout << "El ID ingresado ya esta en uso. Por favor, intente nuevamente."
                  << endl;
@@ -175,11 +177,8 @@ int buscar() // Metodo corregido y funcionando correctamente, era necesario tan 
             return 0;
         }
     }
-    if (buscador != aux->ID)
-    {
-        cout << "El Producto correspondiente al ID ingresado no se encuentra registrado en el inventario" << endl;
-        return 0;
-    }
+    cout << "El Producto correspondiente al ID ingresado no se encuentra registrado en el inventario" << endl;
+
     return 0;
 }
 
@@ -299,10 +298,15 @@ int vender() // metodo completo
                 ganancias = cantVender * aux->ValorUnitario;
 
                 cout << "Usted ha obtenido una ganancia de $" << ganancias << endl;
+                return 0;
             }
         }
+        if (IDVender != aux->ID)
+        {
+            cout << "producto no registrado" << endl;
+            return 0;
+        }
     }
-    cout << "Producto no registrado." << endl;
     return 0;
 }
 
