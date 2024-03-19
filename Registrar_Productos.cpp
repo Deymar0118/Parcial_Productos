@@ -59,9 +59,6 @@ struct RegistroProducto
 
     int acumulador;
 
-    int PrecioTotal;
-    int Promediar;
-
     RegistroProducto *sig;
 };
 
@@ -73,16 +70,16 @@ int registro() // Por este lado no hay problema.
     {
         cab = (struct RegistroProducto *)malloc(sizeof(struct RegistroProducto));
 
-        cout << "ingrese el nombre del producto: ";
+        cout << "Ingrese el nombre del producto: ";
         cin >> cab->Nombre;
 
-        cout << "ingrese el ID del producto: ";
+        cout << "Ingrese el ID del producto: ";
         cin >> cab->ID;
 
-        cout << "ingrese el valor unitario del producto: $";
+        cout << "Ingrese el valor unitario del producto: $";
         cin >> cab->ValorUnitario;
 
-        cout << "ingrese la cantidad a registrar del producto: ";
+        cout << "Ingrese la cantidad a registrar del producto: ";
         cin >> cab->Cantidad;
 
         cab->sig = NULL;
@@ -145,8 +142,8 @@ int mostrar() // Funciona correctamente.
         cout << "Producto #" << aux->acumulador + 1 << endl;
         cout << "Nombre del producto : " << aux->Nombre << endl;
         cout << "ID: " << aux->ID << endl;
-        cout << "valor unitario: $" << aux->ValorUnitario << endl;
-        cout << "cantidad: " << aux->Cantidad << endl;
+        cout << "Valor unitario: $" << aux->ValorUnitario << endl;
+        cout << "Cantidad: " << aux->Cantidad << endl;
         cout << "" << endl;
     }
     return 0;
@@ -155,14 +152,14 @@ int mostrar() // Funciona correctamente.
 int buscar() //Metodo corregido y funcionando correctamente, era necesario tan solo, cambiar de lugar el cout y ponerlo fuera del for
 {
     int buscador = 0;
-    cout << "ingrese el ID del producto a buscar: ";
+    cout << "Ingrese el ID del producto a buscar: ";
     cin >> buscador;
 
     for (aux = cab; aux != NULL; aux = aux->sig)
     {
         if (buscador == aux->ID)
         {
-            cout << "producto registrado" << endl;
+            cout << "Producto registrado" << endl;
             cout << "Producto #" << aux->acumulador + 1 << endl;
             cout << "Nombre del producto : " << aux->Nombre << endl;
             cout << "ID: " << aux->ID << endl;
@@ -210,7 +207,7 @@ int PrecioTotal() // Funciona correctamente
         total = total + cantTotal;
     }
 
-    cout << "el valor total de todos los productos es de: $" << total << endl;
+    cout << "El valor total de todos los productos es de: $" << total << endl;
     return 0;
 }
 
@@ -231,9 +228,9 @@ int Promediar() // Metodo solucionado
     }
     promediar = total3 / total2;
 
-    cout << "existe una cantidad total de " << total2 << " de productos registrados" << endl;
+    cout << "Existe una cantidad total de " << total2 << " de productos registrados" << endl;
 
-    cout << "el promedio del precio de todos los productos es de: " << promediar << endl;
+    cout << "El promedio del precio de todos los productos es de: " << promediar << endl;
     return 0;
 }
 
@@ -241,7 +238,7 @@ int vender() // metodo completo
 {
     int IDVender = 0;
     int cantVender = 0;
-    cout << "ingrese el ID del producto a vender: ";
+    cout << "Ingrese el ID del producto a vender: ";
     cin >> IDVender;
 
     for (aux = cab; aux != NULL; aux = aux->sig)
@@ -252,8 +249,8 @@ int vender() // metodo completo
             cout << "Producto #" << aux->acumulador + 1 << endl;
             cout << "Nombre del producto : " << aux->Nombre << endl;
             cout << "ID: " << aux->ID << endl;
-            cout << "valor unitario: $" << aux->ValorUnitario << endl;
-            cout << "cantidad: " << aux->Cantidad << endl;
+            cout << "vValor unitario: $" << aux->ValorUnitario << endl;
+            cout << "Cantidad: " << aux->Cantidad << endl;
             cout << "" << endl;
 
             cout << "ingrese la cantidad de unidades del producto: ";
@@ -261,32 +258,32 @@ int vender() // metodo completo
 
             if (cantVender > aux->Cantidad)
             {
-                cout << "ATENCION. la cantidad de unidades a vender es mayor a la cantidad de unidades disponibles" << endl;
-                cout << "cancelando la venta" << endl;
+                cout << "ATENCION. La cantidad de unidades a vender es mayor a la cantidad de unidades disponibles" << endl;
+                cout << "Cancelando la venta" << endl;
             }
             if (cantVender <= aux->Cantidad)
             {
                 aux->Cantidad = aux->Cantidad - cantVender;
 
-                cout << "venta relaizada con exito. mostrando resultados: " << endl;
+                cout << "Venta relaizada con exito. mostrando resultados: " << endl;
 
                 cout << "producto existente en el inventario" << endl;
                 cout << "Producto #" << aux->acumulador + 1 << endl;
                 cout << "Nombre del producto : " << aux->Nombre << endl;
                 cout << "ID: " << aux->ID << endl;
-                cout << "valor unitario: $" << aux->ValorUnitario << endl;
-                cout << "cantidad: " << aux->Cantidad << endl;
+                cout << "Valor unitario: $" << aux->ValorUnitario << endl;
+                cout << "Cantidad: " << aux->Cantidad << endl;
                 cout << "" << endl;
 
                 int ganancias = 0;
 
                 ganancias = cantVender * aux->ValorUnitario;
 
-                cout << "usted ha obtenido una ganancia de $" << ganancias << endl;
+                cout << "Usted ha obtenido una ganancia de $" << ganancias << endl;
             }
         }
     }
-    cout << "producto no registrado." << endl;
+    cout << "Producto no registrado." << endl;
     return 0;
 }
 
@@ -302,12 +299,12 @@ int main()
 
         cout << "1. Registrar un producto" << endl;
         cout << "2. Ver Lista de productos" << endl;
-        cout << "3. buscar producto" << endl;
+        cout << "3. Buscar producto" << endl;
         cout << "4. Eliminar producto" << endl;
-        cout << "5. calcular valor total de productos" << endl;
-        cout << "6. calcular el promedio de los precios de los productos" << endl;
-        cout << "7. vender producto (incompleto)" << endl;
-        cout << "8. salir" << endl;
+        cout << "5. Calcular valor total de productos" << endl;
+        cout << "6. Calcular el promedio de los precios de los productos" << endl;
+        cout << "7. Vender producto" << endl;
+        cout << "8. Salir" << endl;
         cout << "Ingrese su opcion: ";
         cin >> opcion;
         cout << "" << endl;
@@ -347,9 +344,9 @@ int main()
             break;
 
         default:
-            cout << "opcion invalida. intente nuevamente" << endl;
+            cout << "Opcion invalida. Intente nuevamente" << endl;
             break;
         }
-    } while (opcion != 9);
+    } while (opcion != 8);
     return 0;
 }

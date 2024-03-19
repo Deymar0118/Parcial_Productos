@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/USUARIO/Documents/UNI/estructura/trabajos de C++/Parcial_producto",
-      "program": "c:/Users/USUARIO/Documents/UNI/estructura/trabajos de C++/Parcial_producto/build/Debug/outDebug",
+      "cwd": "c:/Users/USUARIO/Downloads/parcial de C/Parcial_Productos",
+      "program": "c:/Users/USUARIO/Downloads/parcial de C/Parcial_Productos/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
